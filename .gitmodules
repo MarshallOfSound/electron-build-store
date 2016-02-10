@@ -1,0 +1,6 @@
+[submodule "libchromiumcontent"]
+	path = libchromiumcontent
+	url = https://github.com/atom/libchromiumcontent.git
+[submodule "electron"]
+	path = electron
+	url = https://github.com/atom/electron.git

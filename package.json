@@ -1,0 +1,15 @@
+{
+  "name": "electron-prebuilt-safe",
+  "version": "0.36.7",
+  "description": "Prebuilt electron binaries without dodgy ffmpeg things",
+  "main": "index.js",
+  "scripts": {
+    "build": "index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Samuel Attard",
+  "license": "ISC",
+  "dependencies": {
+    "github": "^0.2.4"
+  }
+}
