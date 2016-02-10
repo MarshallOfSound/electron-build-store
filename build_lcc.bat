@@ -7,10 +7,10 @@ echo "Bootstrapping"
 python script/bootstrap
 
 echo "Updating"
-python script/update -t ia32
+python script/update --target_arch ia32
 
 echo "Building"
-python script/build -t ia32
+python script/build --target_arch ia32
 
 echo "Wrapping"
 python script/create-dist
