@@ -1,6 +1,30 @@
 # How the hell does this work?
 
 > Good question, we'll get to that
+> TLDR: Gypsy magic
+
+## Using
+
+Using this prebuilt is actually insanely easy, you can use this prebuilt with either `electron-packager` or `electron-prebuilt` by simply setting an environment variable on your machine.
+
+```bash
+ELECTRON_MIRROR='https://github.com/MarshallOfSound/electron-prebuilt-safe/releases/download/v'
+```
+
+### Switching from the standard `prebuilt` to this
+
+If you have already downloaded versions of electron before using this prebuilt you might have to delete everything in your `~/.electron` directory (`C:\Users\<username>\.electron` on windows).  You can do this either in a file explorer or with
+```bash
+rm -rf ~/.electron
+```
+
+You will then have to uninstall `electron-prebuilt` from any project you use it in and reinstall it in order for it to fetch the new prebuilts.
+
+```bash
+cd /your/project/directory
+rm -rf node_modules/electron-prebuilt
+npm i
+```
 
 ## Building
 
