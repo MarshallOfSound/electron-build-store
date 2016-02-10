@@ -8,15 +8,18 @@ All platforms require Python `2.7.10` to be available on the path.
 
 ### Windows
 
-Requires Visual Studio to be installed
+#### Pre-reqs
+* Windows 7 / Server 2008 R2 or higher
+* VS 2013 with Update 4
+* Node.js
+* Git
 
-**NOTE:** So far it is known to work with only Visual Studio 2013
-
+#### Running
 Set the following environment variables
 
 ```bash
 GYP_MSVS_OVERRIDE_PATH = 'C:\path\to\visual\studio'
-GYP_MSVS_VERSION = 'year of visual studio install E.g. 2015'
+GYP_MSVS_VERSION = 'year of visual studio install E.g. 2013'
 ```
 
 Run the following
@@ -30,6 +33,15 @@ It appears as though on windows you HAVE to clone this repository into the root 
 
 ### Mac
 
+#### Pre-reqs
+* OSX >= 10.8
+* Xcode >= 5.1 BUT < 7
+* Node.js
+
+*If your python came from homebrew then you might need this python module*
+* pyobjc
+
+#### Running
 Update the path in `build.sh` to point to the directory this project was cloned into
 
 Run the following
