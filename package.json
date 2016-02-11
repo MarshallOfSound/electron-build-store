@@ -4,12 +4,16 @@
   "description": "Prebuilt electron binaries without dodgy ffmpeg things",
   "main": "index.js",
   "scripts": {
-    "build": "index.js",
+    "make:osx": "node index.js",
+    "make:win": "node index.js --arch=x64",
+    "make:win32": "node index.js --arch=ia32",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Samuel Attard",
   "license": "ISC",
   "dependencies": {
-    "github": "^0.2.4"
+    "github": "^0.2.4",
+    "mkdirp": "^0.5.1",
+    "yargs": "^3.32.0"
   }
 }
