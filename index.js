@@ -10,7 +10,10 @@ const patchGypi = require('./lib/patch_gypi');
 const buildLCC = require('./lib/build_lcc');
 const buildElectron = require('./lib/build_electron');
 
-updateModules();
+const platform = {'win32': 'win', 'darwin': 'osx'}[process.platform];
+const arch = argv.arch || 'x64';
+
+updateModules(platform);
 
 patchGypi();
 
@@ -27,9 +30,6 @@ global.REQUIRED_COMMIT = ELECTRON_CONFIG.split(/(?:\r\n|\r|\n)/g)[10].match('.+\
 if (REQUIRED_COMMIT !== LIBCHROMIUMCONTENT_COMMIT) {
   throw Error("The libchromium commit does not match the required version in electron");
 }
-
-const platform = {'win32': 'win', 'darwin': 'osx'}[process.platform];
-const arch = argv.arch || 'x64';
 
 buildLCC(platform, arch)
   .then(() => {
