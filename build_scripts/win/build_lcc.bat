@@ -15,7 +15,7 @@ python script/build --target_arch {{ARCH}}
 echo "Wrapping"
 python script/create-dist --target_arch {{ARCH}}
 
-mkdir -p win\{{ARCH}}\%LIBCHROMIUMCONTENT_COMMIT%
+mkdir win\{{ARCH}}\%LIBCHROMIUMCONTENT_COMMIT%
 move libchromiumcontent* win\{{ARCH}}\%LIBCHROMIUMCONTENT_COMMIT%
 
 @echo on
