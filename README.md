@@ -76,7 +76,4 @@ node index.js
 
 ## TODO
 
-* Automatically apply patch to `chromiumcontent.gypi` instead of doing it manually
-* Automatically detect the required `LIBCHROMIUMCONTENT_COMMIT` variable so it doesn't have to be manually set
-* Make a build path in `index.js` to handle `x64` builds, currently we support it but the default is `ia32`
 * Support linux builds, currently only support OSX and Windows
