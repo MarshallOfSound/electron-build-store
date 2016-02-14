@@ -2,6 +2,7 @@
 
 const argv = require('yargs').argv;;
 const execSync = require('child_process').execSync;
+const fetch = require('node-fetch');
 const fs = require('fs');
 const mkdirp = require('mkdirp');
 
@@ -19,10 +20,10 @@ patchGypi();
 
 mkdirp('./gen_build');
 
-
 const ELECTRON_CONFIG = fs.readFileSync('./electron/script/lib/config.py', 'utf8');
 
 const ELECTRON_COMMIT = execSync('git submodule status electron').toString().split(' ')[1];
+const ELECTRON_TAG = execSync('git submodule status electron').toString().split(' ')[3];
 const LIBCHROMIUMCONTENT_COMMIT = execSync('git submodule status libchromiumcontent').toString().split(' ')[1];
 
 global.REQUIRED_COMMIT = ELECTRON_CONFIG.split(/(?:\r\n|\r|\n)/g)[10].match('.+\ =\ \'(.+)\'')[1];
@@ -38,7 +39,29 @@ if (REQUIRED_COMMIT !== LIBCHROMIUMCONTENT_COMMIT) {
   }
 }
 
-buildLCC(platform, arch)
+fetch('https://api.github.com/repos/MarshallOfSound/electron-prebuilt-safe/releases')
+  .then((resp) => resp.json())
+  .then((releases) => {
+    return new Promise((resolve, reject) => {
+      let released = false;
+      releases.forEach((release) => {
+        if (ELECTRON_TAG.split(release.tag_name).length > 1) {
+          release.assets.forEach((asset) => {
+            if (asset.name === `electron-${release.tag_name}-${process.platform}-${arch}.zip`) {
+              released = true;
+            }
+          });
+        }
+      });
+      if (!released || process.env.IGNORE_RELEASED) {
+        resolve();
+      } else {
+        console.log("This electron version has already been built and released on GitHub");
+        process.exit(0);
+      }
+    });
+  })
+  .then(buildLCC.bind(this, platform, arch))
   .then(() => {
     console.log('LCC successfully built!!');
     buildElectron(platform, arch)
@@ -52,10 +75,10 @@ buildLCC(platform, arch)
       })
       .catch((err) => {
         console.error('Something went wrong somewhere...');
-        console.error(err);
+        throw err;
       });
   })
   .catch((err) => {
     console.error('Something went wrong somewhere...');
-    console.error(err);
+    throw err;
   });
