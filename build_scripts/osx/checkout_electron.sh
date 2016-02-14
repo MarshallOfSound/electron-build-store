@@ -1,4 +1,4 @@
-cd ..\..\electron
+cd electron
 
 commit=$(`git rev-list --tags --max-count=1`)
 

@@ -28,7 +28,14 @@ const LIBCHROMIUMCONTENT_COMMIT = execSync('git submodule status libchromiumcont
 global.REQUIRED_COMMIT = ELECTRON_CONFIG.split(/(?:\r\n|\r|\n)/g)[10].match('.+\ =\ \'(.+)\'')[1];
 
 if (REQUIRED_COMMIT !== LIBCHROMIUMCONTENT_COMMIT) {
-  throw Error("The libchromium commit does not match the required version in electron");
+  console.log("The libchromium commit does not match the required version in electron");
+  console.log("Attempting to match commit now");
+  console.log("");
+
+  execSync(`cd libchromiumcontent && git checkout ${REQUIRED_COMMIT}`);
+  if (execSync('git submodule status libchromiumcontent').toString().split(' ')[1] !== REQUIRED_COMMIT) {
+    throw Error("Could not match required libchromiumcontent commit");
+  }
 }
 
 buildLCC(platform, arch)
