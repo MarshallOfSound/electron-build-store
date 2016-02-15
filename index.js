@@ -23,9 +23,9 @@ mkdirp('./gen_build');
 
 const ELECTRON_CONFIG = fs.readFileSync('./electron/script/lib/config.py', 'utf8');
 
-const ELECTRON_COMMIT = execSync('git submodule status electron').toString().split(' ')[1];
-const ELECTRON_TAG = execSync('git submodule status electron').toString().split(' ')[3];
-const LIBCHROMIUMCONTENT_COMMIT = execSync('git submodule status libchromiumcontent').toString().split(' ')[1];
+const ELECTRON_COMMIT = execSync('git submodule status electron').toString().trim().split(' ')[0].replace('+', '');
+const ELECTRON_TAG = execSync('git submodule status electron').toString().trim().split(' ')[2];
+const LIBCHROMIUMCONTENT_COMMIT = execSync('git submodule status libchromiumcontent').toString().trim().split(' ')[0].replace('+', '')
 
 global.REQUIRED_COMMIT = ELECTRON_CONFIG.split(/(?:\r\n|\r|\n)/g)[10].match('.+\ =\ \'(.+)\'')[1];
 
@@ -35,7 +35,7 @@ if (REQUIRED_COMMIT !== LIBCHROMIUMCONTENT_COMMIT) {
   console.log("");
 
   execSync(`cd libchromiumcontent && git checkout ${REQUIRED_COMMIT}`);
-  if (execSync('git submodule status libchromiumcontent').toString().split(' ')[1] !== REQUIRED_COMMIT) {
+  if (execSync('git submodule status libchromiumcontent').toString().trim().split(' ')[0].replace('+', '') !== REQUIRED_COMMIT) {
     throw Error("Could not match required libchromiumcontent commit");
   }
 }
