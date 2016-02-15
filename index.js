@@ -76,11 +76,13 @@ fetch('https://api.github.com/repos/MarshallOfSound/electron-prebuilt-safe/relea
         console.log('##################');
       })
       .catch((err) => {
-        console.error('Something went wrong somewhere...');
+        console.error('Something went wrong somewhere... (e)');
+        console.error(err);
         throw err;
       });
   })
   .catch((err) => {
-    console.error('Something went wrong somewhere...');
+    console.error('Something went wrong somewhere... (lcc)');
+    console.error(err);
     throw err;
   });
