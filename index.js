@@ -10,6 +10,7 @@ const updateModules = require('./lib/update_submodules');
 const patchGypi = require('./lib/patch_gypi');
 const buildLCC = require('./lib/build_lcc');
 const buildElectron = require('./lib/build_electron');
+const publishToGitHub = require('./lib/publish');
 
 const platform = {'win32': 'win', 'darwin': 'osx'}[process.platform];
 const arch = argv.arch || 'x64';
@@ -65,6 +66,7 @@ fetch('https://api.github.com/repos/MarshallOfSound/electron-prebuilt-safe/relea
   .then(() => {
     console.log('LCC successfully built!!');
     buildElectron(platform, arch)
+      .then(publishToGitHub.bind(this, platform, arch))
       .then(() => {
         console.log('');
         console.log('##################');
